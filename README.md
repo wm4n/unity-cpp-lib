@@ -1,4 +1,4 @@
-# Building C++ Dynamic Linked Library (DLL) for Unity
+# Building C++ DLL for Unity Plugin
 A simple demonstration of using C++ library (DLL) in Unity. This repo describes how to build a C++ library in the form of dynamic linked library (DLL), encapsulate C++ classes and export functions. On the other hand, this repo also shows how to import and use the library (DLL) in Unity via c# script.
 
 ## How to Use Repo
