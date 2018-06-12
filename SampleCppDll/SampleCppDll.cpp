@@ -1,6 +1,23 @@
 #include "SampleCppDll.h"
+#include <string>
+#include <memory>
+#include <string.h>
 
 namespace SampleCppDll {
+
+	class CustomString {
+	private:
+		class impl;
+		std::unique_ptr<impl> pimpl;
+
+	public:
+		CustomString();
+		CustomString(const std::string&);
+		void GetString(char* buf, size_t length);
+		size_t GetLength();
+		void Append(const std::string&);
+		void SetCallback(TEXT_CALLBACK callback);
+	};
 
 	/**
 	 * pimpl implementation to hide logic from the header files
