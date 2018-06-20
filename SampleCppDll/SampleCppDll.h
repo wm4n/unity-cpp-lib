@@ -6,8 +6,7 @@
 #define DLL_API __declspec(dllimport) 
 #endif
 
-#include <string>
-#include <memory>
+#include <stddef.h> // size_t
 
 extern "C" {
 
@@ -19,21 +18,9 @@ extern "C" {
 		typedef void(*TEXT_CALLBACK)(bool hasTextChanged, int newLength);
 		
 		/**
-		 * Library class definition
+		 * Library class declaration
 		 */
-		class CustomString {
-		private:
-			class impl;
-			std::unique_ptr<impl> pimpl;
-
-		public:
-			CustomString();
-			CustomString(const std::string&);
-			void GetString(char* buf, size_t length);
-			size_t GetLength();
-			void Append(const std::string&);
-			void SetCallback(TEXT_CALLBACK callback);
-		};
+		class CustomString;
 
 		/**
 		 * Exported functions

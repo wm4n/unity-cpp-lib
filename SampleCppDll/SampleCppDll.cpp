@@ -1,19 +1,21 @@
 #include "SampleCppDll.h"
+#include <string>
+#include <string.h>
 
 namespace SampleCppDll {
 
-	/**
-	 * pimpl implementation to hide logic from the header files
-	 */
-	class CustomString::impl {
+	class CustomString {
 	private:
-	public:
 		std::string mText;
 		TEXT_CALLBACK mCallback;
 
-		void init(std::string inputText) {
-			mText = std::string(inputText);
-		}
+	public:
+		CustomString();
+		CustomString(const std::string&);
+		void GetString(char* buf, size_t length);
+		size_t GetLength();
+		void Append(const std::string&);
+		void SetCallback(TEXT_CALLBACK callback);
 	};
 
 	/**
@@ -27,34 +29,33 @@ namespace SampleCppDll {
 	 * constructor takes a given string parameter
 	 */
 	CustomString::CustomString(const std::string& inputText) {
-		pimpl = std::make_unique<impl>();
-		pimpl->init(inputText);
+		mText = inputText;
 	}
 
 	/**
 	 * retreive the string and put in into a given buffer
 	 */
 	void CustomString::GetString(char* buf, size_t length) {
-		strncpy_s(buf, length, pimpl->mText.c_str(), pimpl->mText.size());
+		strncpy_s(buf, length, mText.c_str(), mText.size());
 	}
 
 	/**
 	 * retreive the length of the string
 	 */
 	size_t CustomString::GetLength() {
-		if (nullptr != pimpl->mCallback) {
-			pimpl->mCallback(false, pimpl->mText.size());
+		if (nullptr != mCallback) {
+			mCallback(false, mText.size());
 		}
-		return pimpl->mText.size();
+		return mText.size();
 	}
 
 	/**
 	 * append to the string
 	 */
 	void CustomString::Append(const std::string& str) {
-		pimpl->mText.append(str);
-		if (nullptr != pimpl->mCallback) {
-			pimpl->mCallback(str.size() > 0, pimpl->mText.size());
+		mText.append(str);
+		if (nullptr != mCallback) {
+			mCallback(str.size() > 0, mText.size());
 		}
 	}
 
@@ -63,7 +64,7 @@ namespace SampleCppDll {
 	 * is for demostrating how to use callback from unity
 	 */
 	void CustomString::SetCallback(TEXT_CALLBACK callback) {
-		pimpl->mCallback = callback;
+		mCallback = callback;
 	}
 
 	/**
